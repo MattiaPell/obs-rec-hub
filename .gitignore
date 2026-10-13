@@ -1,0 +1,25 @@
+# Build workspaces (created by scripts\setup.ps1)
+.work/
+.work-template.zip
+build_x64/
+build_x86_64/
+
+# Visual Studio / CMake
+.vs/
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+*.user
+*.suo
+
+# Build artefacts
+*.dll
+*.so
+*.dylib
+*.pdb
+*.o
+*.obj
+
+# OS
+Thumbs.db
+.DS_Store
