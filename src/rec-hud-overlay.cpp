@@ -30,8 +30,17 @@ RecHudOverlay::RecHudOverlay(QWidget *parent) : QWidget(parent)
 	tickTimer = new QTimer(this);
 	tickTimer->setInterval(200);
 	connect(tickTimer, &QTimer::timeout, this, [this]() {
-		if (recording)
-			update();
+		if (!recording)
+			return;
+
+		// The label changes width over time: MM:SS becomes HH:MM:SS past the
+		// hour, and digits of different widths come and go. Resize whenever
+		// the text differs, otherwise the extra characters get clipped by the
+		// fixed window size. RebuildLayout() records the new text itself.
+		if (LabelText() != lastLabelText)
+			RebuildLayout();
+
+		update();
 	});
 
 	pulseTimer = new QTimer(this);
@@ -104,13 +113,15 @@ void RecHudOverlay::ApplyConfig(const RecHudConfig &newConfig)
 
 void RecHudOverlay::RebuildLayout()
 {
+	const QString text = LabelText();
 	const QFontMetrics fm(font());
 	const int dot = qMax(kMinDot, config.fontSize * 2 / 3);
-	const QSize textSize = fm.size(Qt::TextSingleLine, LabelText());
+	const QSize textSize = fm.size(Qt::TextSingleLine, text);
 
 	const int w = kPadH * 2 + dot + kGap + textSize.width();
 	const int h = kPadV * 2 + qMax(dot, textSize.height());
 	setFixedSize(qMax(1, w), qMax(1, h));
+	lastLabelText = text;
 
 	// The label grows and shrinks while recording ("PAUSED", MM:SS -> HH:MM:SS).
 	AnchorToCorner();

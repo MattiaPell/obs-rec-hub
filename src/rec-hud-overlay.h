@@ -85,4 +85,7 @@ private:
 	qint64 accumulatedMs = 0;
 	int pulsePhase = 0;
 	QPoint dragOffset;
+
+	/** Last label text laid out; used to detect width changes while recording. */
+	QString lastLabelText;
 };
