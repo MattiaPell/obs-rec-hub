@@ -1,5 +1,7 @@
 # REC HUD — overlay di registrazione per OBS Studio
 
+[English](README.en.md) | [Italiano](README.md)
+
 Plugin nativo per OBS che mostra **un indicatore "REC" sempre in primo piano sul tuo desktop**, con la **durata della registrazione** (attivabile/disattivabile).
 
 Pensato per il caso in cui stai registrando un gioco in **fullscreen** e OBS è nascosto: l'overlay resta visibile a te, sopra tutto, e non finisce nella registrazione.
